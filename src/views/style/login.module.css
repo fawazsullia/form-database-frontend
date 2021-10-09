@@ -1,0 +1,43 @@
+.container{
+    background-color:    #6A62D2 ;
+    min-height: 100vh;
+    padding-top: 100px;
+
+}
+
+.form{
+    width: 23%;
+    background-color: white;
+    margin: auto;
+    padding: 20px 20px;
+    border-radius: 10px;
+}
+
+.form input{
+    width: 90%;
+    height: 40px;
+    outline: none;
+    border: none;
+    background-color: #E5E8ED;
+    margin: 5px auto 10px auto;
+    padding-left: 10px;
+}
+
+.form button{
+
+width: 95%;
+margin: 30px auto 20px auto;
+outline: none;
+background-color: #6A62D2;
+border: none;
+height: 40px;
+color: white;
+}
+
+.form h2{
+    font-weight: 500;
+}
+
+.form button:hover{
+    cursor: pointer;
+}
