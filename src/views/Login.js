@@ -1,9 +1,12 @@
 import React,{useState} from 'react'
 import * as loginStyle from './style/login.module.css'
+import firebase from '../firebaseConfig'
+import { Redirect } from 'react-router'
 
-function Register() {
+function Register({setcurrentUser, redirecttologin}) {
 
     const [input, setinput] = useState({})
+    const [redirect, setredirect] = useState(false)
 
     const handleInput = (e) => {
     
@@ -13,12 +16,35 @@ function Register() {
 
     const handleSubmit = ()=>{
         
+        firebase.auth().signInWithEmailAndPassword(input.email, input.password)
+        .then((userCredential) => {
+          // Signed in
+          var user = userCredential.user;
+          fetch("https://formdatabase.herokuapp.com/auth/login", {
+              method : 'POST',
+              headers : {
+                  'content-type' : 'application/json'
+              },
+              body : JSON.stringify({uid : user.uid})
+          })
+          .then((res)=> res.json())
+          .then((response)=> {setcurrentUser(response); redirecttologin(false); setredirect(true); localStorage.setItem("uid", user.uid)})
+
+        })
+        .catch((error) => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+        });
+
+
     }
 
 
 
 
     return (
+
+        redirect ? <Redirect to="/" /> :
         <div className={loginStyle.container}>
         <form className={loginStyle.form}>
                  <h2>Login to your Account</h2>

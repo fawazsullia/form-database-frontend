@@ -1,7 +1,10 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Link } from 'react-router-dom'
+import firebase from '../firebaseConfig'
+import {Redirect} from 'react-router-dom'
 
-function Nav() {
+function Nav({redirect}) {
+
 
 const styles ={
 
@@ -38,15 +41,23 @@ button : {
 
 }
 
+const signout = () => {
+    firebase.auth().signOut().then(() => {
+        localStorage.removeItem("uid");
+        window.location.replace("https://formdatabase.netlify.app/login");
+        }).catch((error) => {
+            console.log(error)
+        });
+}
 
 
     return (
         <div style={styles.container}>
            <p><Link to="/" style={styles.link}>Form Database</Link></p>
            <ul style={styles.nav}>
-               <li style={styles.list}><Link to="/login" style={styles.link}>Login</Link></li>
-               <li style={styles.list}><Link to="/register" style={styles.link}>Register</Link></li>
-               <li style={styles.list}><button type="button" style={styles.button}>Signout</button></li>
+              { redirect && <li style={styles.list}><Link to="/login" style={styles.link}>Login</Link></li> }
+              { redirect && <li style={styles.list}><Link to="/register" style={styles.link}>Register</Link></li> }
+               { !redirect && <li style={styles.list}><button type="button" onClick={signout} style={styles.button}>Signout</button></li>}
                </ul> 
         </div>
     )
