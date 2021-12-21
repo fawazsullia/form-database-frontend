@@ -1,43 +1,48 @@
-.container{
-    min-height: 100vh;
-    padding-top: 50px;
+.container {
+  min-height: 100vh;
+  padding-top: 50px;
 }
 
-
-.instructions{
-    width: 70%;
-    margin: auto;
-    border: black 1px solid;
-    padding: 15px;
+.instructions {
+  width: 70%;
+  margin: auto;
+  border: black 1px solid;
+  padding: 15px;
 }
-.subContainer{
-    margin: 50px auto 100px 50px;
-}
-
-.subContainer p{
-    font-size: 1.2rem;
-    margin-bottom: 30px;
+.subContainer {
+  margin: 50px auto 100px 50px;
 }
 
-.fields{
-    display: flex;
-    gap: 30px;
+.subContainer p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
 }
 
-.data{
-    display: flex;
-    gap: 30px;
+.fields {
+  display: flex;
+  gap: 30px;
 }
 
-.fields span{
-    width: 120px;
-    background-color: thistle;
-    padding: 5px 0px 5px 5px;
-    color: black;
+.data {
+  display: flex;
+  gap: 30px;
+  flex-direction: column;
 }
 
-.data span{
-    padding-left: 5px;
-    width: 120px;
-    word-wrap: break-word;
+.fields span {
+  width: 120px;
+  background-color: thistle;
+  padding: 5px 0px 5px 5px;
+  color: black;
+}
+
+.itemDiv {
+  display: flex;
+  gap: 30px;
+}
+
+.item {
+  width: 120px;
+  padding: 5px 0 5px 5px;
+  word-wrap: break-word;
 }

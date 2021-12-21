@@ -1,18 +1,26 @@
 import React from 'react'
+import {useState} from 'react'
 import * as homeStyle from './style/home.module.css'
 
 function Home({currentUser}) {
 
+
 let fields =[]
 
-let obj = currentUser.formFills[0]
 
-for (const [key, value] of Object.entries(obj)) {
-    fields.push(key)
-}
+    for (const [key, value] of Object.entries(currentUser.formFills[0])) {
+        fields.push(key)
+    }
+
+
+
+
 
 
     return (
+
+
+        
         <div className={homeStyle.container}>
             <div className={homeStyle.instructions}>
                 <p>To collect submissions, send a PUT request to the below url on form submit:
@@ -25,12 +33,12 @@ for (const [key, value] of Object.entries(obj)) {
                       }   
                     }\n`}<br /><br/>
                     {
-                        `Your apiKey : ${currentUser._id}`
+                        `Your apiKey : ${currentUser.apiKey}`
                     }
                     
                 </p>
             </div>
-            <div className={homeStyle.subContainer}>
+       <div className={homeStyle.subContainer}>
 <p>Submissions : </p>
 <div className={homeStyle.fields}>
 {
@@ -39,6 +47,7 @@ for (const [key, value] of Object.entries(obj)) {
         <span>{field}</span>
         )
     })
+    
 }
 </div>
 <br/>
@@ -46,21 +55,31 @@ for (const [key, value] of Object.entries(obj)) {
 {
 
 currentUser.formFills.map((fill)=>{
-          return  fields.map((field)=>{
+
+          return (<div className={homeStyle.itemDiv}>
+{ fields.map((field)=>{
 
 return (
-    <span>{fill[field]}</span>
+    <span className={homeStyle.item}>{fill[field]}</span>
 )
 
-            })
+            })}
+          </div>)
+          
+          
+          
+          
+         
     
 
 })
 
 }
+
+
 </div>
 
-            </div>
+</div> 
         </div>
     )
 }

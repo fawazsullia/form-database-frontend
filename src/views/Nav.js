@@ -1,9 +1,8 @@
 import React, {useState} from 'react'
 import { Link } from 'react-router-dom'
 import firebase from '../firebaseConfig'
-import {Redirect} from 'react-router-dom'
 
-function Nav({redirect}) {
+function Nav({currentUser}) {
 
 
 const styles ={
@@ -55,9 +54,9 @@ const signout = () => {
         <div style={styles.container}>
            <p><Link to="/" style={styles.link}>Form Database</Link></p>
            <ul style={styles.nav}>
-              { redirect && <li style={styles.list}><Link to="/login" style={styles.link}>Login</Link></li> }
-              { redirect && <li style={styles.list}><Link to="/register" style={styles.link}>Register</Link></li> }
-               { !redirect && <li style={styles.list}><button type="button" onClick={signout} style={styles.button}>Signout</button></li>}
+              { !currentUser.apiKey && <li style={styles.list}><Link to="/login" style={styles.link}>Login</Link></li> }
+              { !currentUser.apiKey && <li style={styles.list}><Link to="/register" style={styles.link}>Register</Link></li> }
+               { currentUser.apiKey && <li style={styles.list}><button type="button" onClick={signout} style={styles.button}>Signout</button></li>}
                </ul> 
         </div>
     )

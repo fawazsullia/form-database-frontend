@@ -1,23 +1,26 @@
 import React, { useState, useEffect } from 'react'
-import {Switch, Route, Redirect} from 'react-router-dom'
+import {Route} from 'react-router-dom'
 import Home from './views/Home';
 import Login from './views/Login';
 import Nav from './views/Nav';
 import Register from './views/Register';
 import Loading from './views/Loading'
+import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 
 function App() {
 
-const [currentUser, setcurrentUser] = useState({formFills :[{}], email : false})
+const [currentUser, setcurrentUser] = useState({formFills :[{}], email : "", apiKey : ""})
 const [loading, setloading] = useState(false)
-const [redirect, setredirect] = useState(false)
+
 
 
 useEffect(() => {
 
-  setloading(true)
+setloading(true)
 const uid = localStorage.getItem("uid")
+console.log(uid)
 if(uid){
+  console.log("This checks in")
   fetch("https://formdatabase.herokuapp.com/auth/login", {
               method : 'POST',
               headers : {
@@ -26,44 +29,41 @@ if(uid){
               body : JSON.stringify({uid : uid})
           })
           .then((res)=> res.json())
-          .then((response)=> {setcurrentUser(response); setloading(false)})
+          .then((response)=> {setcurrentUser(response); setloading(false);})
           .catch((err)=> setloading(false))
 
 }
-else{ setredirect(true); setloading(false)  }
+else{ setloading(false)  }
 
 
 
 }, [])
 
-const fetchUser = (apiKey)=>{
+const fetchUser = (user)=>{
 
-fetch(`https://formdatabase.herokuapp.com/data/entries/${apiKey}`)
-.then((res)=> res.json())
-.then((response)=> {setcurrentUser(response); console.log(response)})
-.catch((err)=> console.log(err))
+setcurrentUser(user)
 
 }
 
-
+console.log(currentUser)
 
   return (
 loading ? <Loading /> :
 
     <div className="App">
-<Nav redirect={redirect}/>
+<Nav currentUser={currentUser}/>
 
  <Route path="/register">    
-<Register fetchUser={fetchUser} redirecttologin={setredirect} />
+{ currentUser.apiKey ? <Redirect to="/" /> :  <Register fetchUser = {fetchUser}/>}
 </Route>
 
 <Route path="/login">
-<Login setcurrentUser={setcurrentUser} redirecttologin={setredirect} />
+{ currentUser.apiKey ? <Redirect to="/" /> :  <Login fetchUser = {fetchUser}/>}
 </Route>
 
 
 <Route exact path="/">
-{redirect ? <Redirect to="/login" /> : <Home currentUser={currentUser} />}
+{  currentUser.apiKey ? <Home currentUser={currentUser} /> : <Redirect to="/login"/> }
 </Route>
 
 
